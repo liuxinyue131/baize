@@ -202,7 +202,7 @@ export function SearchDialog() {
       <Dialog open={open}>
         <DialogContent className="sm:max-w-[850px] text-black">
           <DialogHeader>
-            <DialogTitle>AI 法律助手</DialogTitle>
+            <DialogTitle>白泽神兽</DialogTitle>
             <DialogDescription>
               我是您的法律助手，请输入您想查询的问题
             </DialogDescription>
@@ -237,7 +237,7 @@ export function SearchDialog() {
                     <Frown width={18} />
                   </span>
                   <span className="text-slate-700 dark:text-slate-100">
-                    服务器繁忙，请稍后再试! 或者<a href="https://github.com/lvwzhen/law-cn-ai" target='_blank' className='underline underline-offset-4 decoration-slate-400/50 hover:text-indigo-500 hover:decoration-indigo-500'>自行部署</a>
+                    服务器繁忙，请稍后再试! 
                   </span>
                 </div>
               )}
@@ -268,19 +268,7 @@ export function SearchDialog() {
               </div>
               <div className="text-xs text-gray-500 md:flex space-y-2 md:space-y-0 gap-2 dark:text-gray-100">
                 Or try:{' '}
-                <button
-                  type="button"
-                  className="px-1.5 py-0.5
-                  bg-slate-50 dark:bg-gray-500  
-                  hover:bg-slate-100 dark:hover:bg-gray-600
-                  rounded border border-slate-200 dark:border-slate-600
-                  transition-colors"
-                  onClick={(_) =>
-                    setSearch('离婚需要双方同意吗？')
-                  }
-                >
-                  离婚需要双方同意吗？
-                </button>
+       
                 <button
                   type="button"
                   className="px-1.5 py-0.5
@@ -311,10 +299,10 @@ export function SearchDialog() {
             </div>
             <DialogFooter>
               <div className="text-xs text-gray-500 mt-4 md:m-0 dark:text-gray-100">
-                * 回答由 AI 检索法律文件后生成，不保证准确率，仅供参考学习！<a href="https://afdian.net/a/lvwzhen/plan" className='ml-1 underline decoration-wavy decoration-indigo-500 underline-offset-2 hover:text-indigo-500' target='_blank'>打赏赞助</a>
+                * 回答由 AI 检索法律文件后生成，不保证准确率，仅供参考学习！
               </div>
               <Button type="submit" className="bg-red-500 block w-full md:w-auto md:inline-block">
-                Ask
+                发送
               </Button>
             </DialogFooter>
           </form>
