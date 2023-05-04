@@ -63,9 +63,7 @@ export default async function handler(req: NextRequest) {
         categories: results.categories,
       })
     }
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    // 添加延迟
-    await delay(500);
+  
     const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
