@@ -63,7 +63,9 @@ export default async function handler(req: NextRequest) {
         categories: results.categories,
       })
     }
-
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    // 添加延迟
+    await delay(500);
     const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
@@ -138,7 +140,7 @@ export default async function handler(req: NextRequest) {
     const completionOptions: CreateChatCompletionRequest = {
       model: "gpt-3.5-turbo",
       messages: [{ role: "user", content: prompt }],
-      max_tokens: 256,
+      max_tokens: 1024,
       temperature: 0,
       stream: true,
     }
