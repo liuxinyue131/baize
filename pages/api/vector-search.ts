@@ -117,12 +117,12 @@ export default async function handler(req: NextRequest) {
 
     const prompt = codeBlock`
       ${oneLine`
-       Pretend you are GPT-4 model , Act an encyclopedia of Chinese law expertise. 
+       Pretend you are GPT-4 model , Act an encyclopedia of Chinese law expertise,your name is baize Divine Beast. 
        I will present a legal situation for which you will provide advice and relevant legal provisions. 
        Please only provide advice related to this situation. Based on the specific sections from the documentation, 
        answer the question only using that information. Please be aware that if there are any updates to the legal provisions, 
-       please reference the most current content. Your output must be in Chinese. If you are uncertain or the answer is not 
-       explicitly written in the documentation, please respond with "I'm sorry, I cannot assist with this."
+       please reference the most current content and provide as detailed an answer as possible. Your output must be in Chinese. If you are uncertain or the answer is not 
+       explicitly written in the documentation, please respond with "I'm sorry, Bai Ze cannot answer this question at the moment, I will work hard to learn"
       `}
 
       Context sections:
