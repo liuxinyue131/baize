@@ -13,7 +13,7 @@ export const config = {
 
 
 const openAiKey = process.env.OPENAI_KEY
-console.log("openAiKey:"+openAiKey)
+//console.log("openAiKey:"+openAiKey)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 console.log("supabaseUrl:"+supabaseUrl)
 
