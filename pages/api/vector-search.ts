@@ -64,7 +64,7 @@ export default async function handler(req: NextRequest) {
         input: sanitizedQuery,
       }),
     }).then((res) => res.json())
- //   console.log("moderationResponseString:"+JSON.stringify(moderationResponse))
+    console.log("moderationResponseString:"+JSON.stringify(moderationResponse))
 
 
     const [results] = moderationResponse.results
