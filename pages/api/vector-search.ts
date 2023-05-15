@@ -153,7 +153,6 @@ export default async function handler(req: NextRequest) {
       temperature: 0,
       stream: true,
     }
-    console.log("1233:")
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -163,8 +162,6 @@ export default async function handler(req: NextRequest) {
       },
       body: JSON.stringify(completionOptions),
     })
-    console.log("123343:")
-
     if (!response.ok) {
       const error = await response.json()
       throw new ApplicationError('Failed to generate completion', error)
