@@ -4,6 +4,7 @@ import { codeBlock, oneLine } from 'common-tags'
 import GPT3Tokenizer from 'gpt3-tokenizer'
 import { CreateChatCompletionRequest } from 'openai'
 import { ApplicationError, UserError } from '@/lib/errors'
+import { error } from 'console'
 
 // OpenAIApi does currently not work in Vercel Edge Functions as it uses Axios under the hood.
 export const config = {
@@ -12,8 +13,13 @@ export const config = {
 
 
 const openAiKey = process.env.OPENAI_KEY
+console.log("openAiKey:"+openAiKey)
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+console.log("supabaseUrl:"+supabaseUrl)
+
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+console.log("supabaseServiceKey:"+supabaseServiceKey)
+
 
 export default async function handler(req: NextRequest) {
   try {
@@ -42,10 +48,13 @@ export default async function handler(req: NextRequest) {
     }
 
     const supabaseClient = createClient(supabaseUrl, supabaseServiceKey)
+  
 
     // Moderate the content to comply with OpenAI T&C
     const sanitizedQuery = query.trim()
-    const moderationResponse = await fetch('https://openai.wl166.com/v1/moderations', {
+    console.log("sanitizedQuery:"+sanitizedQuery)
+
+    const moderationResponse = await fetch('https://api.openai.com/v1/moderations', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${openAiKey}`,
@@ -55,6 +64,8 @@ export default async function handler(req: NextRequest) {
         input: sanitizedQuery,
       }),
     }).then((res) => res.json())
+ //   console.log("moderationResponseString:"+JSON.stringify(moderationResponse))
+
 
     const [results] = moderationResponse.results
 
@@ -65,7 +76,7 @@ export default async function handler(req: NextRequest) {
       })
     }
   
-    const embeddingResponse = await fetch('https://openai.wl166.com/v1/embeddings', {
+    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${openAiKey}`,
@@ -76,7 +87,6 @@ export default async function handler(req: NextRequest) {
         input: sanitizedQuery.replaceAll('\n', ' '),
       }),
     })
-
     if (embeddingResponse.status !== 200) {
       throw new ApplicationError('Failed to create embedding for question', embeddingResponse)
     }
@@ -84,6 +94,7 @@ export default async function handler(req: NextRequest) {
     const {
       data: [{ embedding }],
     } = await embeddingResponse.json()
+  //  console.log("embedding:"+JSON.stringify(embedding))
 
     const { error: matchError, data: pageSections } = await supabaseClient.rpc(
       'match_page_sections',
@@ -94,7 +105,6 @@ export default async function handler(req: NextRequest) {
         min_content_length: 50,
       }
     )
-
     if (matchError) {
       throw new ApplicationError('Failed to match page sections', matchError)
     }
@@ -143,8 +153,9 @@ export default async function handler(req: NextRequest) {
       temperature: 0,
       stream: true,
     }
+    console.log("1233:")
 
-    const response = await fetch('https://openai.wl166.com/v1/chat/completions', {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${openAiKey}`,
@@ -152,6 +163,7 @@ export default async function handler(req: NextRequest) {
       },
       body: JSON.stringify(completionOptions),
     })
+    console.log("123343:")
 
     if (!response.ok) {
       const error = await response.json()
