@@ -1,65 +1,53 @@
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import { SearchDialog } from '@/components/SearchDialog'
-import Image from 'next/image'
-import Link from 'next/link'
-import Script from 'next/script'
-
-const inter = Inter({ subsets: ['latin'] })
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 export default function Home() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    
+    // 执行登录逻辑，这里仅作示例
+    if (username === 'ws' && password === 'Tt123456') {
+      // 登录成功，重定向到其他页面
+      router.push('/baizeshenshouindex');
+    } else {
+      // 登录失败，显示错误消息
+      alert('用户名或密码不正确');
+    }
+  };
+
   return (
-    <>
-      <Head>
-        <title>白泽神兽</title>
-        <meta
-          name="description"
-          content="白泽神兽"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-        
-      </Head>
-      <Script
-      src="https://www.googletagmanager.com/gtag/js?id=G-6GCGYXNM3S"
-      strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-6GCGYXNM3S');
-        `}
-      </Script>
-      <main className={styles.main}>
-        <h1 className='text-slate-700 font-bold text-2xl mb-12 flex items-center gap-3 dark:text-slate-400'><Image src={'/logo.png'} width="32" height="32" alt="MagickPen logo" />白泽神兽</h1>
-        <div className={styles.center}>
-          <SearchDialog />
-        </div>
-
-        <div className="py-10 w-full md:flex items-center justify-center md:space-x-6">
-          <div className="flex items-center justify-center space-x-6 mt-4 md:m-0">
-            <div className="opacity-75 transition hover:opacity-100 cursor-pointer">
-              <Link
-                href="https://github.com/lvwzhen/law-cn-ai"
-                className="flex items-center justify-center"
-              >
-            
-              </Link>
-            </div>
-            <div className="opacity-75 transition hover:opacity-100 cursor-pointer">
-              <Link
-                href="https://twitter.com/lvwzhen"
-                className="flex items-center justify-center"
-              >
-              </Link>
-            </div>
-          </div>
-        </div>
-      </main>
-    </>
-  )
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '2rem', textAlign: 'center' }}>
+        白泽神兽
+      </h1>
+      <div style={{ backgroundColor: '#ffffff', padding: '2rem', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+        <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleLogin}>
+          <label htmlFor="username" style={{ marginBottom: '1rem' }}>Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={{ marginBottom: '1rem', padding: '0.5rem', border: '1px solid #ccc', borderRadius: '4px' }}
+          />
+          <label htmlFor="password" style={{ marginBottom: '1rem' }}>Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ marginBottom: '1rem', padding: '0.5rem', border: '1px solid #ccc', borderRadius: '4px' }}
+          />
+          <button type="submit" style={{ padding: '0.5rem 1rem', backgroundColor: '#007bff', color: '#ffffff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>登陆</button>
+        </form>
+      </div>
+    </div>
+  );
 }
